@@ -1,3 +1,2 @@
-API -> .env
-AI: mistral and deepseek
-da
+MISTRAL_API_KEY=jOsQkokinmMe0IK5r6VVNYMniChRN4MF \
+DEEPSEEK_API_KEY=sk-5629e9fbf13e448990148b9bd800d4b8
