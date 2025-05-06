@@ -1,0 +1,50 @@
+from typing import Optional
+from api.mistral import MistralAPI
+
+
+class AppLogic:
+    def __init__(self, initial_grade: int = 6):
+        self.grade = initial_grade
+        self.questions: list[str] = []
+        self.answers: list[str] = []
+        self.user_answers: list[str] = []
+        self.current_question = 0
+
+    def load_questions(self) -> bool:
+        try:
+            self.questions, self.answers = MistralAPI.generate_questions(self.grade)
+            self.user_answers = [""] * len(self.questions)
+            self.current_question = 0
+            return True
+        except Exception as e:
+            print(f"Error loading questions: {e}")
+            return False
+
+    def next_grade(self):
+        self.grade += 1
+        if self.grade > 11:
+            self.grade = 6
+        return self.grade
+
+    def check_answer(self, user_answer: str) -> bool:
+        if self.current_question >= len(self.questions):
+            return False
+
+        self.user_answers[self.current_question] = user_answer
+        is_correct = user_answer.lower() == self.answers[self.current_question].lower()
+        self.current_question += 1
+        return is_correct
+
+    def get_current_question(self) -> Optional[str]:
+        if self.current_question < len(self.questions):
+            return self.questions[self.current_question]
+        return None
+
+    def get_progress(self) -> tuple[int, int]:
+        return self.current_question + 1, len(self.questions)
+
+    def check_completion(self) -> bool:
+        return all(
+            user.lower() == correct.lower()
+            for user, correct in zip(self.user_answers, self.answers)
+        )
