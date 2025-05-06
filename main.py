@@ -23,7 +23,7 @@ def main():
         return
 
     try:
-        logic = AppLogic(initial_grade=6)  # Начальный класс
+        logic = AppLogic(initial_grade=6)
         app = MainWindow(logic)
         app.run()
     except Exception as e:

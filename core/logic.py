@@ -1,13 +1,13 @@
-from typing import Optional
+from typing import Optional, Tuple, List
 from api.mistral import MistralAPI
 
 
 class AppLogic:
     def __init__(self, initial_grade: int = 6):
         self.grade = initial_grade
-        self.questions: list[str] = []
-        self.answers: list[str] = []
-        self.user_answers: list[str] = []
+        self.questions: List[str] = []
+        self.answers: List[str] = []
+        self.user_answers: List[str] = []
         self.current_question = 0
 
     def load_questions(self) -> bool:
@@ -40,7 +40,7 @@ class AppLogic:
             return self.questions[self.current_question]
         return None
 
-    def get_progress(self) -> tuple[int, int]:
+    def get_progress(self) -> Tuple[int, int]:
         return self.current_question + 1, len(self.questions)
 
     def check_completion(self) -> bool:

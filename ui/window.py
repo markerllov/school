@@ -8,7 +8,7 @@ class MainWindow:
     def __init__(self, logic: AppLogic):
         self.logic = logic
         self.root = tk.Tk()
-        self.root.title("Школьные задания с Mistral")
+        self.root.title("Школьные задания")
         self.root.geometry("900x650")
 
         self._setup_ui()
@@ -102,7 +102,49 @@ class MainWindow:
             if self.logic.load_questions():
                 self._update_ui()
                 self.status_label.config(text="Вопросы готовы!", fg="green")
+                self.submit_button.config(state=tk.NORMAL)
             else:
                 self.status_label.config(text="Ошибка загрузки вопросов", fg="red")
         except Exception as e:
             self.status_label.config(text=f"Ошибка: {str(e)}", fg="red")
+
+    def _on_answer(self):
+        user_answer = self.answer_entry.get().strip()
+        if user_answer:
+            is_correct = self.logic.check_answer(user_answer)
+            if is_correct:
+                self.answer_entry.config(bg="#e8f5e9")
+            else:
+                self.answer_entry.config(bg="#ffebee")
+
+            self._update_ui()
+
+    def _update_ui(self):
+        question = self.logic.get_current_question()
+        if question:
+            self.question_label.config(text=question)
+            self.answer_entry.delete(0, tk.END)
+            self.answer_entry.config(bg="white")
+            current, total = self.logic.get_progress()
+            self.progress_label.config(text=f"Вопрос {current} из {total}")
+        else:
+            if self.logic.check_completion():
+                messagebox.showinfo(
+                    "Поздравляем!",
+                    f"Вы правильно ответили на все вопросы для {self.logic.grade} класса!"
+                )
+                self.root.after(2000, self.root.destroy)
+            else:
+                correct = sum(
+                    1 for i in range(len(self.logic.questions))
+                    if self.logic.user_answers[i].lower() == self.logic.answers[i].lower()
+                )
+                messagebox.showwarning(
+                    "Результат",
+                    f"Вы ответили правильно на {correct} из {len(self.logic.questions)} вопросов."
+                )
+                self.logic.current_question = 0
+                self._update_ui()
+
+    def run(self):
+        self.root.mainloop()
