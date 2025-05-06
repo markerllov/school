@@ -6,6 +6,7 @@ load_dotenv()
 
 class Config:
     MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
+    DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
     API_URL = "https://api.mistral.ai/v1/chat/completions"
     MODEL = "mistral-small"
 
