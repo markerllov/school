@@ -31,7 +31,7 @@ def main():
         app = MainWindow(logic)
         app.run()
     except Exception as e:
-        logging.critical(f"Ошибка приложения: {str(e)}")
+        logging.critical(f"Ошибка приложения {str(e)}")
 
 
 if __name__ == "__main__":

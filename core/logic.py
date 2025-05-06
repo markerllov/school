@@ -15,7 +15,8 @@ class AppLogic:
         try:
             self.questions, self.answers = MistralAPI.generate_questions(self.grade)
             self.user_answers = [""] * len(self.questions)
-            self.current_question = 0
+            return len(self.questions) == 5
+            #self.current_question = 0
             return True
         except Exception as e:
             print(f"Ошибка загрузки вопросов: {e}")
@@ -39,6 +40,11 @@ class AppLogic:
     def get_current_question(self) -> Optional[str]:
         if self.current_question < len(self.questions):
             return self.questions[self.current_question]
+        return None
+
+    def get_question(self, index: int) -> Optional[Tuple[str, str]]:
+        if 0 <= index < len(self.questions):
+            return self.questions[index], self.answers[index]
         return None
 
     def get_progress(self) -> Tuple[int, int]:
