@@ -18,7 +18,7 @@ class AppLogic:
             self.current_question = 0
             return True
         except Exception as e:
-            print(f"Error loading questions: {e}")
+            print(f"Ошибка загрузки вопросов: {e}")
             return False
 
     def next_grade(self):

@@ -19,19 +19,19 @@ def main():
     configure_logging()
 
     if not Config.MISTRAL_API_KEY:
-        logging.error("Mistral API key not found in .env file")
+        logging.error("API не найден")
         return
 
     try:
         logic = AppLogic(initial_grade=6)
         if not logic.questions:
-            logging.error("Failed to load initial questions")
+            logging.error("Ошибка загрузки вопросов")
             return
 
         app = MainWindow(logic)
         app.run()
     except Exception as e:
-        logging.critical(f"Application failed: {str(e)}")
+        logging.critical(f"Ошибка приложения: {str(e)}")
 
 
 if __name__ == "__main__":

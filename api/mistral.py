@@ -37,7 +37,7 @@ class MistralAPI:
             )
 
             if response.status_code != 200:
-                error_msg = f"Mistral API Error {response.status_code}: {response.text}"
+                error_msg = f"Нет API {response.status_code}: {response.text}"
                 logger.error(error_msg)
                 raise Exception(error_msg)
 
@@ -46,7 +46,7 @@ class MistralAPI:
             return MistralAPI._parse_response(content)
 
         except Exception as e:
-            logger.error(f"Error generating questions: {str(e)}")
+            logger.error(f"Ошибка генерации вопосов: {str(e)}")
             raise
 
     @staticmethod
