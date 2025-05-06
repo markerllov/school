@@ -9,6 +9,7 @@ class AppLogic:
         self.answers: List[str] = []
         self.user_answers: List[str] = []
         self.current_question = 0
+        self.load_questions()
 
     def load_questions(self) -> bool:
         try:

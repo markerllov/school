@@ -24,6 +24,10 @@ def main():
 
     try:
         logic = AppLogic(initial_grade=6)
+        if not logic.questions:
+            logging.error("Failed to load initial questions")
+            return
+
         app = MainWindow(logic)
         app.run()
     except Exception as e:

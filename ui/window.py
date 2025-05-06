@@ -12,7 +12,7 @@ class MainWindow:
         self.root.geometry("900x650")
 
         self._setup_ui()
-        self._update_ui()
+        self.status_label.config(text="Выберите класс и нажмите Обновить вопросы")
 
     def _setup_ui(self):
         self.main_frame = tk.Frame(self.root, padx=20, pady=20)
@@ -92,7 +92,8 @@ class MainWindow:
 
     def _on_grade_change(self, event=None):
         self.logic.grade = self.grade_var.get()
-        self._refresh_questions()
+        self.status_label.config(text=f"Выбран {self.logic.grade} класс. Нажмите Обновить вопросы", fg="black")
+        self.submit_button.config(state=tk.DISABLED)
 
     def _refresh_questions(self):
         self.status_label.config(text="Генерация вопросов...", fg="blue")
@@ -100,8 +101,10 @@ class MainWindow:
 
         try:
             if self.logic.load_questions():
+                self.current_question = 0
+                self.user_answer = [""] * len(self.logic.questions)
                 self._update_ui()
-                self.status_label.config(text="Вопросы готовы!", fg="green")
+                self.status_label.config(text="Вопросы готовы", fg="green")
                 self.submit_button.config(state=tk.NORMAL)
             else:
                 self.status_label.config(text="Ошибка загрузки вопросов", fg="red")
