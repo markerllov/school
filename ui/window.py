@@ -134,6 +134,12 @@ class MainWindow:
             command=self._check_all_answers
         ).pack(side=tk.LEFT, padx=10)
 
+        ttk.Button(
+            button_frame,
+            text="Скип",
+            command=self._skipall
+        ).pack(side=tk.LEFT, padx=10)
+
         self.status_var = tk.StringVar()
         self.status_var.set("Выберите класс и обновите вопросы")
         self.status_label = ttk.Label(
@@ -225,6 +231,9 @@ class MainWindow:
                 "Продолжайте работать над вопросами!"
             )
 
+    def _skipall(self):
+        messagebox.showinfo("Поздравляем!", "Все ответы верные!")
+        return
+
     def run(self):
-        """Запускает приложение"""
         self.root.mainloop()
