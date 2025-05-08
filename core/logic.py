@@ -16,7 +16,6 @@ class AppLogic:
             self.questions, self.answers = MistralAPI.generate_questions(self.grade)
             self.user_answers = [""] * len(self.questions)
             return len(self.questions) == 5
-            #self.current_question = 0
             return True
         except Exception as e:
             print(f"Ошибка загрузки вопросов: {e}")

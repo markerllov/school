@@ -203,7 +203,6 @@ class MainWindow:
             self.status_var.set(f"Ответ на вопрос {self.current_question_idx + 1} сохранён")
 
     def _check_all_answers(self):
-        """Проверяет все ответы и выводит результат"""
         if not hasattr(self.logic, 'answers') or not self.logic.answers:
             self.status_var.set("Сначала загрузите вопросы")
             return
